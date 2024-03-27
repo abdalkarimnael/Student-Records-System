@@ -34,10 +34,10 @@ read char
 case "$char"
 in
 	#To display student records for all semester
-1 ) echo "Student records for all semesters: "
+        echo "Student records for all semesters: "
 	cat $filename |tr -s '; ' ' ' | tr -s ', ' ' ' | tr -s ' ' ':' | cut -d':' -f1- | tr -s ':' ' ';;
 	#To display student records for a specific semester
-2 ) 	echo "Please enter a number for a specific semester: "
+  	echo "Please enter a number for a specific semester: "
 	choose="$2"
 	read choose     #read from the user
 	if [ "$choose" -eq 1 ]	# if the user choose the first semester
@@ -56,14 +56,14 @@ in
 	echo "Please enter a number of semester from 1 to 3"
 	exit 1		#To close from this case if the input not correct
 	fi;;
-3 )	cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | cut -d' ' -f3 | grep -v "I" | sed 's/FA/50/' | sed 's/F/55/' > Grades.txt	#To extract all grades for all semesters and  involve handle repeated courses and I courses 
+ 	cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | cut -d' ' -f3 | grep -v "I" | sed 's/FA/50/' | sed 's/F/55/' > Grades.txt	#To extract all grades for all semesters and  involve handle repeated courses and I courses 
 	sum=`awk '{ sum += $1 } END { print sum }' Grades.txt`	#To find the sum of all grades
 	n=`cat Grades.txt | wc -l`	#To find the number of grades
 	avg=`echo 2 k 0 "$sum" "$n" / + p | dc`	#To find the average
 	#The arithmetic precision is changed with the command k, which sets the number of fractional digits (the number of digits following the point)
 	#The command p to print out to the screen the top element on the stack
 	echo "The average for all records is : "$avg"";;	#To print and display the average
-4 )	echo "Please enter a number for a specific semester: "
+ 	echo "Please enter a number for a specific semester: "
 	choices="$3"
         read choices	#To read a number from the user
 	#For the first semester
@@ -94,11 +94,11 @@ in
         echo "Please enter a number of semester from 1 to 3"
         exit 1
         fi;;
-5 ) 	#To extract the number of passed hours for each course
+  	#To extract the number of passed hours for each course
 	cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | grep -v "I" | grep -v "FA" | grep -v "F" | cut -d' ' -f2 | perl -pe 's/(.)/\1 /g' | cut -d' ' -f6 > passedHours.txt
 	TotalNumber=`awk '{ sum += $1 } END { print sum }' passedHours.txt`	#To find the total number of passed hours
 	echo "The total number of passed hours is: "$TotalNumber"";;
-6 )	#To extract the number of hours for each course its grade is FA
+ 	#To extract the number of hours for each course its grade is FA
 	cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | grep "FA" | cut -d' ' -f2 | perl -pe 's/(.)/\1 /g' | cut -d' ' -f6 > FAhours.txt
         #To extract the number of hours for each course its grade is FA
 	cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | grep -v "FA" | grep "F" | cut -d' ' -f2 | perl -pe 's/(.)/\1 /g' | cut -d' ' -f6 > Fhours.txt
@@ -134,7 +134,7 @@ in
 	fi;;
 
 	#To fined the total of hours for each semester
-7 )	echo "Please enter a number for a specific semester: "
+ 	echo "Please enter a number for a specific semester: "
         ch="$3"
 	read ch
 	#For first semester
@@ -164,16 +164,16 @@ in
 	fi;;
 
 	#To find the number of all courses
-8 )	T=`cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | wc -l` #To sore the number of all courses
+ 	T=`cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | wc -l` #To sore the number of all courses
 	printf "\nTotal number of courses taken = "$T" courses\n\n";;
 
 	#To calculate the number of labs taken
 	#To store the number
-9 )	N=`cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | cut -d' ' -f2 | perl -pe 's/(.)/\1 /g' | cut -d' ' -f6 | grep "1" | wc -l`
+ 	N=`cat $filename | grep "EN" | tr -s ' ' ' ' | sort | uniq | cut -d';' -f2 | tr ',' '\n' | cut -d' ' -f2 | perl -pe 's/(.)/\1 /g' | cut -d' ' -f6 | grep "1" | wc -l`
 	printf "\nTotal number of labs taken = "$N" labs\n\n";;
 
 	#To insert a new semester record
-10 )	#declare variables
+ 	#declare variables
 	year="$1"
 	code="$1"
 	num="$1"
@@ -244,7 +244,7 @@ in
 	fi
       done;;
 	# To change a grade for a specific course
-11 )	#Declare variables to read data
+ 	#Declare variables to read data
 	course_code="$1"
 	course_num="$1"
 	NewGrade="$1"
@@ -271,7 +271,7 @@ in
 	else
 	printf "\nError, please enter (n or N) to cancel or (y or Y) to confirm !!\n\n"
 	fi;;
-* ) echo "PLease enter a number between 1-11 only";;		#To display a message if the entery not correct
+        echo "PLease enter a number between 1-11 only";;		#To display a message if the entery not correct
 esac
       	break                      # To exit and stop the loop and skipping the second condition
    else				# If the file does not exist
